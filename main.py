@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import time
 
 import PySimpleGUI as sg
 
@@ -50,13 +51,20 @@ if __name__ == '__main__':
                 result = int(values['-INPUT-'])
             except:
                 log_to_file.log_error_to_file("errorLog", "The entered is not a number")
+                continue
+
             if values['-OPTION-'] == 'Seconds in minutes':
                 result = int(values['-INPUT-']) // 60
             elif values['-OPTION-'] == 'Minutes in hours':
                 result = int(values['-INPUT-']) // 60
             elif values['-OPTION-'] == 'Hours in days':
                 result = int(values['-INPUT-']) // 24
-            window['-RESULT-'].update(f'Time: {result}')
+
+            try:
+                window['-RESULT-'].update(f'Time: {result}')
+            except:
+                log_to_file.log_error_to_file("errorLog", "Result is not defined")
+
             window['-TAB3-'].select()
             log_to_file.log_info_to_file("infoLog", f'result = {result}')
         elif event == 'Choose':
